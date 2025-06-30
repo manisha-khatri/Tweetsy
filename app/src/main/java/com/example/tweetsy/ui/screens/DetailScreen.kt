@@ -11,16 +11,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.tweetsy.model.TweetListItem
 import androidx.compose.foundation.lazy.items
-
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.tweetsy.ui.state.UiState
+import com.example.tweetsy.viewmodel.DetailViewModel
 
 @Composable
-fun TweetsDetailScreen(tweets: List<TweetListItem>) {
-    LazyColumn {
-        items(tweets) { item ->
-            TweetListItem(item.text)
+fun TweetsDetailScreen() {
+    val viewModel: DetailViewModel = hiltViewModel()
+    val state = viewModel.tweets.collectAsStateWithLifecycle()
+
+    when(val uiState = state.value) {
+        is UiState.Loading -> Text(text = "Loading ...")
+        is UiState.Success -> {
+            LazyColumn() {
+                items(uiState.data) { item ->
+                    TweetListItem(item.text)
+                }
+            }
         }
+        is UiState.Error -> Text(text = uiState.message.toString())
     }
 }
 

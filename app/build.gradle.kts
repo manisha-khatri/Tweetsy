@@ -108,4 +108,6 @@ dependencies {
 
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.compose.navigation)
+
+    implementation(libs.compose.material)
 }

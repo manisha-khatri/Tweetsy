@@ -1,6 +1,6 @@
 package com.example.tweetsy.di
 
-import com.example.tweetsy.Constants
+import com.example.tweetsy.util.Constants
 import com.example.tweetsy.api.TweetsyAPI
 import dagger.Module
 import dagger.Provides
