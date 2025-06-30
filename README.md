@@ -13,6 +13,9 @@ A minimal Android app built using **Jetpack Compose** following the **MVVM archi
 - Compose-based UI with modern best practices
 - Easy-to-navigate codebase — perfect for beginners and interview prep!
 
+![Category Screen](drawable/category_screen.png)
+![Details Screen](drawable/detail_screen.png)
+
 ---
 
 > 🚀 This is an introductory project to showcase how to structure a Compose-based Android app using MVVM and HILT.
