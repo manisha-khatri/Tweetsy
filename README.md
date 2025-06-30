@@ -13,8 +13,11 @@ A minimal Android app built using **Jetpack Compose** following the **MVVM archi
 - Compose-based UI with modern best practices
 - Easy-to-navigate codebase — perfect for beginners and interview prep!
 
-![Category Screen](screenshot/category_screen.png)
-![Details Screen](screenshot/detail.png)
+![Category Screen]
+<img src="screenshot/category_screen.png" width="300" />
+
+![Details Screen] 
+<img src="screenshot/v.png" width="300" />
 
 ---
 
