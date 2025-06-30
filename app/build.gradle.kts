@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -31,48 +32,80 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    hilt {
+        enableAggregatingTask = false
+    }
     kotlinOptions {
         jvmTarget = "11"
     }
     buildFeatures {
+        viewBinding = true
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
 }
 
 dependencies {
-
+    // Core AndroidX Libraries
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+
+    // Networking & Serialization
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+
+    // Coroutines & ViewModel
+    implementation(libs.coroutine.viewmodel)
+
+    // Jetpack Compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui.tooling.preview) // Preview support
+    debugImplementation(libs.compose.ui.tooling)    // Debug-only tooling
+
+    // Unit Testing
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.coroutines.test)
+
+    // Instrumented Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.activity.ktx)
-    implementation(libs.core.ktx)
 
-    implementation(libs.hilt.android)
-    //kapt(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
+    implementation(libs.javafx)
 
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler) // ✅ Use KSP instead of kapt
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
+    implementation(libs.apollo.runtime)
 
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
-    implementation(libs.navigation.compose)
+    // Compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.androidx.compose.runtime)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler) // ✅ Using KSP, not kapt
+
+    // Optional: If you're using Hilt with Compose Navigation
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.compose.navigation)
 }

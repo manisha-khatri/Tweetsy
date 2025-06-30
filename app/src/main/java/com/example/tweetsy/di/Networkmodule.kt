@@ -10,9 +10,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
-class Networkmodule {
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
 
     @Singleton
     @Provides
