@@ -19,7 +19,4 @@ A minimal Android app built using **Jetpack Compose** following the **MVVM archi
 ## 🔥 Details Screen
 <img src="screenshot/detail.png" width="300" />
 
----
-
-> 🚀 This is an introductory project to showcase how to structure a Compose-based Android app using MVVM and HILT.
 
