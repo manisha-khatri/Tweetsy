@@ -15,24 +15,30 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val tweetRepository: TweetRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _tweets = MutableStateFlow<UiState<List<TweetListItem>>>(UiState.Loading)
-    val tweets: StateFlow<UiState<List<TweetListItem>>> = _tweets
+    val tweets: StateFlow<UiState<List<TweetListItem>>> get() = _tweets
+
+    private val category: String = savedStateHandle["category"] ?: "motivation"
 
     init {
-        val category = savedStateHandle.get<String>("category") ?: "motivation"
-        fetchTweets(category)
+        fetchTweets()
     }
 
-    fun fetchTweets(category: String) {
+    private fun fetchTweets() {
         viewModelScope.launch {
-            val response = tweetRepository.getTweets(category)
-            if(response != null) {
-               _tweets.emit(UiState.Success(response))
-            } else
-                _tweets.emit(UiState.Error("Data Not Found"))
+            try {
+                val response = tweetRepository.getTweets(category)
+                if (response != null) {
+                    _tweets.value = UiState.Success(response)
+                } else {
+                    _tweets.value = UiState.Error("No tweets found for '$category'")
+                }
+            } catch (e: Exception) {
+                _tweets.value = UiState.Error("Something went wrong: ${e.message}")
+            }
         }
     }
 }
